@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="24" ry="24" fill="#FFD800"/>
+  <g font-family="Arial,Helvetica,sans-serif" text-anchor="middle">
+    <text x="60" y="56" font-size="28" font-weight="700" fill="#0b1f3f">UB</text>
+    <text x="60" y="84" font-size="16" font-weight="500" fill="#0b1f3f">Tutoring</text>
+  </g>
+</svg>

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UB Tutoring — Online GCSE & A-Level Economics</title>
+<link rel="icon" type="image/jpeg" href="assets/ub-logo-official.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f5ef;--bg-2:#efeae0;--ink:#17172b;--ink-2:#3a3a4a;--muted:#6b6b75;--accent:#F4B942;--accent-dim:rgba(244,185,66,.12);--accent-glow:rgba(244,185,66,.35);--max:1200px;--gap:clamp(16px,3.2vw,40px)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Roboto",system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--ink);line-height:1.55;overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+/* Header */
+.site-header{position:sticky;top:0;z-index:100;padding:22px 32px;display:flex;align-items:center;justify-content:space-between;gap:28px;transition:background .3s ease,box-shadow .3s ease,border-color .3s ease;border-bottom:1px solid transparent;background:var(--accent);min-height:76px}
+.site-header.scrolled{box-shadow:0 6px 24px rgba(23,23,43,.06);border-bottom-color:rgba(23,23,43,.08)}
+.logo{display:inline-flex;align-items:center;gap:10px;font-weight:700;color:var(--ink)}
+.logo-mark{width:auto;height:46px;padding:0;display:inline-flex;align-items:center;font-family:"Roboto",system-ui,sans-serif;font-weight:600;font-size:14px;letter-spacing:.6px;aspect-ratio:auto}
+.logo-mark img{width:100%;height:100%;object-fit:contain;display:block}
+.logo-text{font-size:1.05rem;letter-spacing:.2px}
+.nav{display:flex;align-items:center;gap:18px}
+.nav-links{display:none;list-style:none;gap:18px;align-items:center}
+.nav-links a{font-size:.92rem;font-weight:500;color:var(--ink-2);position:relative;padding:6px 2px}
+.nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--accent);transition:width .25s ease}
+.nav-links a:hover{color:var(--ink)}
+.nav-links a:hover::after{width:100%}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 18px;border-radius:999px;font-weight:600;font-size:.92rem;border:1.5px solid transparent;cursor:pointer;transition:transform .08s ease,background .2s ease,border-color .2s ease,color .2s ease}
+.btn-primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-primary:hover{background:#000;border-color:#000}
+.btn-outline{background:transparent;color:var(--ink);border-color:rgba(23,23,43,.25)}
+.btn-outline:hover{border-color:var(--ink)}
+.nav-toggle{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:10px;border:1px solid rgba(23,23,43,.18);background:transparent;cursor:pointer;position:relative}
+.burger{display:block;width:18px;height:2px;background:var(--ink);position:relative;border-radius:2px;transition:background .2s ease,transform .2s ease}
+.burger::before,.burger::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--ink);border-radius:2px;transition:transform .25s ease,top .25s ease}
+.burger::before{top:-6px}
+.burger::after{top:6px}
+.nav-toggle[aria-expanded="true"] .burger{background:transparent}
+.nav-toggle[aria-expanded="true"] .burger::before{top:0;transform:rotate(45deg)}
+.nav-toggle[aria-expanded="true"] .burger::after{top:0;transform:rotate(-45deg)}
+@media(max-width:819px){.nav-toggle{position:absolute;right:24px;top:50%;transform:translateY(-50%)}.site-header{position:relative}.nav-links{display:none!important}}
+
+/* Mobile menu */
+.mobile-menu{position:fixed;top:56px;left:0;right:0;z-index:90;background:#f7f5ef;border-bottom:1px solid rgba(23,23,43,.12);box-shadow:0 20px 40px rgba(23,23,43,.08);padding:18px 24px 22px;display:none;flex-direction:column;gap:10px;backdrop-filter:saturate(140%) blur(8px)}
+.mobile-menu.open{display:flex}
+.mobile-menu a{padding:12px 8px;border-bottom:1px solid rgba(23,23,43,.08);font-weight:600;color:var(--ink);font-size:1rem}
+.mobile-menu .btn-primary{margin-top:8px;text-align:center;justify-content:center;padding:14px 18px}
+@media(min-width:820px){.nav-links{display:flex!important}.nav-toggle{display:none}}
+
+/* Testimonial carousel */
+.testimonial-carousel{overflow:hidden;border-radius:18px;position:relative;width:100vw;max-width:100vw;margin-left:50%;transform:translateX(-50%)}
+.testimonial-scroll{overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scroll-behavior:smooth;display:flex;gap:20px;padding:0 20px 8px;scrollbar-width:none;-ms-overflow-style:none}
+.testimonial-scroll::-webkit-scrollbar{display:none}
+.testimonial-track{display:flex;gap:20px;width:100%}
+.testimonial-track .quote{background:#fff;border:1px solid rgba(23,23,43,.08);border-radius:18px;padding:26px 28px;min-width:0;flex:0 0 calc(100% - 40px);scroll-snap-align:start;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;box-sizing:border-box;overflow-wrap:break-word;word-break:break-word}
+.testimonial-track .quote:hover{border-color:rgba(23,23,43,.15);transform:translateY(-3px);box-shadow:0 18px 50px rgba(23,23,43,.07)}
+.testimonial-dots{display:flex;gap:8px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+.testimonial-dots button{width:10px;height:10px;border-radius:999px;border:1px solid rgba(23,23,43,.2);background:transparent;padding:0;cursor:pointer;transition:background .2s ease,transform .2s ease}
+.testimonial-dots button.active{background:var(--ink);border-color:var(--ink);transform:scale(1.1)}
+@media(max-width:640px){.testimonial-track .quote{min-width:88%}}
+@media(prefers-reduced-motion:reduce){.testimonial-track{transition:none}.testimonial-scroll{scroll-behavior:auto}}
+
+/* Hero */
+.hero{position:relative;padding:24px 24px 28px;border-bottom:1px solid rgba(23,23,43,.08)}
+.hero-inner{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr;gap:28px;align-items:center;text-align:center}
+@media(min-width:860px){.hero-inner{grid-template-columns:1.1fr .9fr;gap:48px}}
+.hero h1{font-family:"Roboto",system-ui,sans-serif;font-size:clamp(38px,5.4vw,58px);font-weight:700;line-height:1.08;letter-spacing:-.2px}
+.hero .lead{font-size:clamp(1rem,2.2vw,1.2rem);color:var(--ink-2);max-width:54ch;margin:12px auto 0}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;justify-content:center}
+.media-frame{position:relative;border-radius:18px;overflow:hidden;border:1px solid rgba(23,23,43,.08);box-shadow:0 20px 60px rgba(23,23,43,.08)}
+.media-frame::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(23,23,43,.55) 100%);pointer-events:none}
+.media-frame img{width:100%;aspect-ratio:4/3;object-fit:cover;filter:grayscale(12%) contrast(1.02)}
+.hero-nav{display:flex;gap:18px;align-items:center;margin-top:14px;flex-wrap:wrap;justify-content:center}
+.hero-nav a{font-size:.9rem;font-weight:500;color:var(--ink-2)}
+.hero-nav a:hover{color:var(--ink)}
+
+/* Stats */
+.stats{max-width:var(--max);margin:0 auto;padding:18px 0 0}
+.stats-inner{max-width:480px;margin:0 auto;display:flex;gap:14px;justify-content:center}
+.stat{padding:14px 16px;border:1px solid rgba(23,23,43,.08);border-radius:14px;background:#fff;display:flex;flex-direction:column;min-width:110px;flex:1 1 0;text-align:center;align-items:center;justify-content:center}
+.stat-num{font-family:"Roboto",system-ui,sans-serif;font-size:26px;font-weight:600;color:var(--ink)}
+.stat-label{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-top:2px}
+
+/* Sections */
+.section{padding:28px 24px}
+@media(min-width:860px){.section{padding:56px 24px}}
+.section.alt{background:var(--bg-2)}
+.section-header{max-width:var(--max);margin:0 auto 28px;text-align:center}
+.section-label{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border:1px solid rgba(198,163,90,.35);border-radius:999px;background:var(--accent-dim);color:#8a6f2f;font-size:12px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;margin-bottom:14px}
+.section-title{font-family:"Roboto",system-ui,sans-serif;font-size:clamp(32px,4.2vw,52px);font-weight:700;line-height:1.1;margin-bottom:10px}
+.section-sub{color:var(--ink-2);max-width:62ch;margin:0 auto}
+.container{max-width:var(--max);margin:0 auto}
+
+/* Cards */
+.grid{display:grid;gap:16px}
+@media(min-width:640px){.grid{grid-template-columns:repeat(2,1fr);gap:20px}}
+@media(min-width:980px){.grid.three{grid-template-columns:repeat(3,1fr)}}
+.card{background:#fff;border:1px solid rgba(23,23,43,.08);border-radius:18px;padding:22px;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.card:hover{border-color:rgba(23,23,43,.15);transform:translateY(-3px);box-shadow:0 18px 50px rgba(23,23,43,.07)}
+.card h3{font-size:1.05rem;font-weight:600;margin-bottom:6px}
+.card p{color:var(--ink-2);font-size:.96rem}
+.price{font-weight:700;margin-top:10px}
+.price .orig{color:#9a9aa6;text-decoration:line-through;font-weight:500;margin-left:8px;font-size:.85rem}
+.badge{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--ink);color:#fff;font-size:10.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-left:8px;vertical-align:middle}
+.badge.light{background:#fff;color:var(--ink);border:1px solid rgba(23,23,43,.15)}
+
+/* Quote */
+.quote{background:#fff;border:1px solid rgba(23,23,43,.08);border-radius:18px;padding:22px;position:relative;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.quote:hover{border-color:rgba(23,23,43,.15);transform:translateY(-3px);box-shadow:0 18px 50px rgba(23,23,43,.07)}
+.quote p{color:var(--ink-2);font-size:1rem;line-height:1.75;overflow-wrap:break-word;word-break:break-word}
+.quote .by{margin-top:10px;font-weight:700;color:var(--ink);font-size:.93rem}
+
+/* About */
+.about-grid{max-width:var(--max);margin:0 auto;display:grid;gap:24px;align-items:center}
+@media(min-width:860px){.about-grid{grid-template-columns:1fr 1fr;gap:48px}}
+.about-media{position:relative}
+.about-media img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:18px;border:1px solid rgba(23,23,43,.08);filter:grayscale(15%) contrast(1.02)}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.chip{padding:8px 14px;border-radius:999px;background:#fff;border:1px solid rgba(23,23,43,.1);font-size:12px;font-weight:600;color:var(--ink-2);letter-spacing:.6px}
+ul.checks{list-style:none;margin-top:8px}
+ul.checks li{display:flex;align-items:flex-start;gap:10px;padding:6px 0;color:var(--ink-2);font-size:.98rem}
+ul.checks li::before{content:"✓";color:var(--accent);font-weight:700;flex-shrink:0}
+
+/* Contact */
+.contact-grid{max-width:var(--max);margin:0 auto;display:grid;gap:18px}
+@media(min-width:860px){.contact-grid{grid-template-columns:1fr 1fr;gap:24px}}
+.contact-card{background:#fff;border:1px solid rgba(23,23,43,.08);border-radius:18px;padding:22px}
+form{display:grid;gap:12px}
+label{font-weight:600;font-size:.92rem}
+input,textarea,select{width:100%;padding:12px 14px;border-radius:12px;border:1px solid rgba(23,23,43,.15);font-family:inherit;font-size:1rem;background:#fff}
+textarea{min-height:120px;resize:vertical}
+button[type=submit]{justify-self:start}
+
+/* CTA band */
+.cta{max-width:var(--max);margin:0 auto}
+.cta-inner{background:#fff;border:1px solid rgba(23,23,43,.1);border-radius:18px;padding:22px;text-align:center;position:relative;overflow:hidden}
+.cta-inner::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(198,163,90,.18),transparent 55%);pointer-events:none}
+.cta h2{font-family:"Roboto",system-ui,sans-serif;font-size:clamp(28px,3.6vw,44px);font-weight:700;position:relative}
+.cta p{color:var(--ink-2);position:relative}
+
+/* Footer */
+.site-footer{max-width:var(--max);margin:0 auto;padding:28px 0;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:.92rem}
+.footer-links{display:flex;gap:16px;flex-wrap:wrap}
+.footer-links a{color:var(--ink-2);font-weight:500}
+.footer-links a:hover{color:var(--ink)}
+
+/* Animations */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(prefers-reduced-motion:reduce){
+  .reveal{transition:none;opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<a href="#main" class="visually-hidden" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Skip to content</a>
+
+<header class="site-header" id="header">
+  <a class="logo" href="#home">
+      <img src="assets/ub-logo-header.jpg" alt="UB Tutoring" class="logo-mark">
+    </a>
+  <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu" id="menu-toggle">
+    <span class="burger" aria-hidden="true"></span>
+  </button>
+  <nav class="nav" id="primary-nav" aria-label="Primary">
+    <ul class="nav-links" id="nav-list">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a class="btn btn-primary" href="#contact">Book now</a></li>
+    </ul>
+  </nav>
+</header>
+<div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <a href="#about">About</a>
+  <a href="#services">Services</a>
+  <a href="#testimonials">Testimonials</a>
+  <a href="#contact">Contact</a>
+  <a class="btn btn-primary" href="#contact">Book now</a>
+</div>
+
+<main id="main">
+
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="reveal">
+      <h1>Online GCSE and A-Level Economics Tutoring.</h1>
+      <p class="lead">Actualising your children’s strengths. Producing Results.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#services">View services</a>
+        <a class="btn btn-outline" href="#contact">Get in touch</a>
+      </div>
+      <nav class="hero-nav" aria-label="Quick links">
+        <a href="#about">About the tutor</a>
+        <a href="#testimonials">Student results</a>
+        <a href="#services">Pricing</a>
+      </nav>
+    </div>
+    <div class="media-frame reveal">
+      <img src="assets/ub-logo-official.jpg" alt="UB Tutoring" fetchpriority="high">
+    </div>
+  </div>
+  <div class="stats reveal">
+    <div class="stats-inner">
+      <div class="stat"><span class="stat-num">10+</span><span class="stat-label">Years teaching</span></div>
+      <div class="stat"><span class="stat-num">3</span><span class="stat-label">Exam boards</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="about">
+  <div class="section-header reveal">
+    <div class="section-label">About the tutor</div>
+    <h2 class="section-title">About Me</h2>
+    <p class="section-sub">Experienced teacher, tutor and Head of Department with over 10 years of classroom, tutoring and examination experience.</p>
+  </div>
+  <div class="about-grid">
+    <div class="about-media reveal">
+      <img src="assets/about-portrait.jpg" alt="About UB Tutoring">
+    </div>
+    <div class="reveal">
+      <p>As a parent, you want your child to feel confident, supported, and capable of achieving their very best. My role as a tutor is to provide exactly that.</p>
+      <br>
+      <p>In addition to being a parent myself; I am an experienced teacher, tutor and Head of Department; with over 10 years of classroom, tutoring and examination experience. I have worked extensively with the major UK exam boards <strong>Edexcel</strong>, <strong>AQA</strong> and <strong>OCR</strong>; giving me a clear understanding of curriculum expectations, assessment criteria, and how to prepare students effectively for GCSE and A Level examinations.</p>
+      <br>
+      <p>One of my key strengths is my ability to respond carefully and thoughtfully to the individual needs of each pupil. Every child learns differently. Some require reassurance and confidence-building; others benefit from stretch and challenge. Some need structured support to secure foundational knowledge, while others are preparing for competitive university applications.</p>
+      <br>
+      <p>Over the years, I have supported students of all abilities and learning needs. A number of my students have gone on to secure places at Oxbridge and Russell Group universities, to study Economics and other desired fields.</p>
+      <br>
+      <h3 style="font-family:'Roboto',system-ui,sans-serif;font-size:22px;font-weight:700;margin-bottom:8px">What You Can Expect</h3>
+      <ul class="checks">
+        <li>Personalised learning strategies tailored to each student's needs</li>
+        <li>Focused, results-driven sessions for GCSE and A-Level Economics</li>
+        <li>Clear feedback and measurable progress tracking</li>
+        <li>Support for Edexcel, AQA, and OCR exam boards</li>
+        <li>Confidence-building alongside academic improvement</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="section-header reveal">
+    <div class="section-label">Services &amp; pricing</div>
+    <h2 class="section-title">My Services</h2>
+    <p class="section-sub">Personalised learning strategies tailored to each student's unique academic needs, ensuring measurable progress and success.</p>
+  </div>
+  <div class="container">
+    <div class="grid three">
+      <div class="card reveal">
+        <h3>Consultation</h3>
+        <p>Initial chat to discuss needs and goals.</p>
+        <p class="price">Free <span class="badge light">Starter</span></p>
+      </div>
+      <div class="card reveal">
+        <h3>Initial Assessment</h3>
+        <p>A focused session to identify strengths, gaps, and priorities.</p>
+        <p class="price">£25.00</p>
+      </div>
+      <div class="card reveal">
+        <h3>Block One (5 hours) <span class="badge">Sale</span></h3>
+        <p>5 hours of structured 1:1 online tuition.</p>
+        <p class="price">£180.00 <span class="orig">£250.00</span></p>
+      </div>
+      <div class="card reveal">
+        <h3>Block Two (10 Hours) <span class="badge">Sale</span></h3>
+        <p>10 hours of structured 1:1 online tuition.</p>
+        <p class="price">£360.00 <span class="orig">£500.00</span></p>
+      </div>
+      <div class="card reveal">
+        <h3>For Schools (Day Rate) <span class="badge">Sale</span></h3>
+        <p>Day rate for school-based support.</p>
+        <p class="price">£450.00 <span class="orig">£540.00</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt" id="testimonials">
+  <div class="section-header reveal">
+    <div class="section-label">Testimonials</div>
+    <h2 class="section-title">Student &amp; Parent Feedback</h2>
+    <p class="section-sub">Selected testimonials from students and parents who have experienced the UB Tutoring approach.</p>
+  </div>
+  <div class="container">
+    <div class="testimonial-carousel" id="testimonial-carousel">
+      <div class="testimonial-scroll" id="testimonial-scroll">
+        <div class="testimonial-track">
+          <div class="quote">
+            <p>“Being in Mr. Ba’s class was both informative and enjoyable. When teaching economics, he always ensured that complex concepts were simplified and fully understood. His feedback on written assessments was insightful and consistently challenged me to go above and beyond.”</p>
+            <p class="by">— Dillon O. – Economics Graduate, LSE; Economic Consultant at Eurogroup</p>
+          </div>
+          <div class="quote">
+            <p>“Mr. Ba was an amazing teacher who taught me Economics through both my GCSEs and A-Levels. He made the subject engaging and genuinely enjoyable, which inspired me to continue studying Economics at Loughborough University. I am incredibly grateful to have had him as a teacher.”</p>
+            <p class="by">— Amal A. – Economics Graduate, Loughborough University; Senior Auditor – UK National Audit Office</p>
+          </div>
+          <div class="quote">
+            <p>“I thoroughly enjoyed my Economics lessons with Mr. Ba. He made the subject practical, rigorous, and intellectually engaging, always encouraging me to think critically about how markets truly function. His teaching laid the foundation for how I analyse markets today.”</p>
+            <p class="by">— Tyrone K. - Economics Graduate, University of Sussex; Acquisition Manager LPGP Connect</p>
+          </div>
+          <div class="quote">
+            <p>“I really valued my lessons with Mr. Ba. He explained complex topics clearly and brought economics to life with real-world examples and practical applications. I was especially appreciative of the additional support he provided through detailed marking and feedback on extra work I submitted. I genuinely believe I would not have achieved my final grade without Mr. Ba’s support, and I would absolutely recommend him to other students.”</p>
+            <p class="by">— Ashe O. – Applied Finance Graduate, University of Exeter; EMEA manager at Citi Bank</p>
+          </div>
+          <div class="quote">
+            <p>“Mr Ba is an incredible teacher who has an amazing ability to make economic content accessible and consumable to all. His work reflects how much he cares about his students academic progress. Studying Land Economy, at the University of Cambridge, was a lot easier because I had a teacher like him. Now also working in Education, I aim to be an educator like Mr Ba!”</p>
+            <p class="by">— Renee A. Land Economy Graduate - Cambridge University</p>
+          </div>
+          <div class="quote">
+            <p>“Mr. Ba is a dedicated teacher who genuinely cares about his students and the subject matter. After being predicted a C in A-Level Economics, I spent extra time studying with him and was able to achieve an A in the final exam.”</p>
+            <p class="by">— Johnson A.  Civil Engineering Graduate, University of Manchester; FDR specialist at Moody’s</p>
+          </div>
+          <div class="quote">
+            <p>“Mr. Ba is an exceptional teacher who has had a long-lasting impact on the way I understand the world today. He teaches economics in such an engaging and thought-provoking manner that I developed a deep understanding of key principles, many of which I continue to apply in my everyday life.”</p>
+            <p class="by">— Quadri A. – International Relations Graduate, University of Liverpool;  Business Manager- London Mayor’s Office</p>
+          </div>
+          <div class="quote">
+            <p>“I really enjoyed economics with Mr. Ba—now working as a Surveyor with an MSc in Real Estate, I can clearly trace my interest in property markets, supply and demand, and land economics back to his lessons. At a time when I doubted my ability with numbers, Mr. Ba showed me that economics is about logic, incentives, and understanding how the world works. His teaching encouraged me to think strategically and continues to shape how I analyse real-world issues today.”</p>
+            <p class="by">— Lakesiha O.- Masters in Real Estate Management & BA in Politics and History, University of Warwick</p>
+          </div>
+          <div class="quote">
+            <p>“Mr Ba was always an engaging but calm and confident communicator during lessons. Having been able to learn from Mr Ba at GCSE & A-Level grade, his knowledge and charisma for business and economics proved invaluable in those years in which I was able to secure stellar grades and progress into a desired and prosperous career. I'd recommend Mr. Ba in every circumstance and for every kind of student, I truly believe he is a one-of-a-kind teacher that is willing to go that extra mile and be adaptable and committed for the greater good of his students’ learning.”</p>
+            <p class="by">— Kieran H.- International Relations Graduate at the University of Warwick; Project Manager for Lewisham Council</p>
+          </div>
+          <div class="quote">
+            <p>“I greatly valued my lessons with Mr. Ba at UCL Academy Sixth Form. He had a real talent for breaking down complicated economic theories into simple, memorable explanations, often using relatable analogies and acronyms that made the content stick.”</p>
+            <p class="by">— Yusuf A. – MPharm Student, Keele University</p>
+          </div>
+          <div class="quote">
+            <p>“Mr. Ba’s lessons were always the ones I most looked forward to each week because they perfectly balanced a light-hearted atmosphere with serious and efficient work. There was never a point where I felt excessive pressure when I didn’t understand something, as I knew I could approach him for clearer explanations both in class and outside of it.”</p>
+            <p class="by">— Johnny Ibuna , Economics Student and Prospective Economics Undergraduate at UCL</p>
+          </div>
+          <div class="quote">
+            <p>“Over the two years prior to finding Mr. Ba, we had engaged two other tutors for Theo, but the arrangements were short-lived and ultimately ineffective. His experience with Mr. Ba was entirely different—he genuinely looked forward to each session and, more importantly, became self-motivated to complete work independently without any prompting. There was something distinct about Mr. Ba’s approach that made a real impact, and I remain incredibly grateful for the support he provided, both to Theo and through our own conversations.”</p>
+            <p class="by">— Paul S. - Parent of Former Tutee</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-dots" id="testimonial-dots" aria-label="Testimonial controls"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="cta reveal">
+    <div class="cta-inner">
+      <h2>Book a session today</h2>
+      <p style="color:var(--ink-2);margin-top:8px">Use the contact form to request a booking or consultation slot.</p>
+      <a class="btn btn-primary" href="#contact" style="margin-top:14px">Book now</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="section-header reveal">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">Get In Touch</h2>
+    <p class="section-sub">If you have any queries, or require any further information, please do not hesitate to contact me. I will respond to all requests within 48 hours.</p>
+  </div>
+  <div class="contact-grid">
+    <div class="contact-card reveal">
+      <p><strong>Email:</strong> <a href="mailto:umartnba.1992@gmail.com">umartnba.1992@gmail.com</a></p>
+      <p><strong>Telephone:</strong> <a href="tel:+447961667042">+447 9616 6704</a></p>
+      <p style="margin-top:14px;color:var(--ink-2)">Preferred response via email. Please include your child's exam board and current year group if known.</p>
+    </div>
+    <div class="contact-card reveal">
+      <form action="https://formsubmit.co/umartnba.1992@gmail.com" method="POST">
+        <div style="display:grid;gap:12px">
+          <label>First name <input type="text" name="first_name" required></label>
+          <label>Last name <input type="text" name="last_name" required></label>
+          <label>Email <input type="email" name="email" required></label>
+          <label>Message <textarea name="message" required></textarea></label>
+          <label style="display:flex;align-items:center;gap:8px"><input type="checkbox" name="newsletter"> <span style="font-weight:400">Sign up for news and updates</span></label>
+        </div>
+        <button class="btn btn-primary" type="submit" style="margin-top:8px">Send</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer style="border-top:1px solid rgba(23,23,43,.08);padding:18px 24px">
+  <div class="site-footer">
+    <div><strong>UB Tutoring</strong><div style="color:var(--muted);font-size:.92rem">Online GCSE &amp; A-Level Economics Tutoring.</div></div>
+    <nav class="footer-links" aria-label="Footer">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+      <a href="#testimonials">Testimonials</a>
+    </nav>
+    <div style="color:var(--muted);font-size:.9rem">&copy; <span id="year"></span> UB Tutoring. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  const year=document.getElementById('year'); if(year) year.textContent=new Date().getFullYear();
+  const header=document.getElementById('header');
+  const toggle=document.getElementById('menu-toggle');
+  const menu=document.getElementById('mobile-menu');
+  const mobileLinks=menu.querySelectorAll('a');
+  function openMenu(){menu.classList.add('open');toggle.setAttribute('aria-expanded','true');menu.setAttribute('aria-hidden','false')}
+  function closeMenu(){menu.classList.remove('open');toggle.setAttribute('aria-expanded','false');menu.setAttribute('aria-hidden','true')}
+  toggle.addEventListener('click',()=>menu.classList.contains('open')?closeMenu():openMenu());
+  mobileLinks.forEach(a=>a.addEventListener('click',()=>{closeMenu()}));
+  window.addEventListener('scroll',()=>{header.classList.toggle('scrolled',window.scrollY>20)},{passive:true});
+  const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}});},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  const carousel=document.getElementById('testimonial-carousel');
+  const scrollEl=document.getElementById('testimonial-scroll');
+  const dotsEl=document.getElementById('testimonial-dots');
+  function initCarousel(carousel,scrollEl,dotsEl){
+    if(!carousel || !scrollEl || !dotsEl) return;
+    const slides=scrollEl.querySelectorAll('.quote');
+    const dotButtons=[];
+    slides.forEach((_,i)=>{
+      const b=document.createElement('button');
+      b.setAttribute('aria-label','Testimonial '+(i+1));
+      dotsEl.appendChild(b);
+      dotButtons.push(b);
+      b.addEventListener('click',()=>{slides[i].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'})});
+    });
+    const updateDots=()=>{
+      const sl=scrollEl.scrollLeft;
+      const w=scrollEl.clientWidth;
+      let idx=0;
+      slides.forEach((s,i)=>{
+        const offset=Math.abs((s.offsetLeft + s.offsetWidth/2)-(sl + w/2));
+        if(offset< (Math.abs((slides[idx].offsetLeft + slides[idx].offsetWidth/2)-(sl + w/2))+1)) idx=i;
+      });
+      dotButtons.forEach((b,i)=>b.classList.toggle('active',i===idx));
+    };
+    scrollEl.addEventListener('scroll',updateDots,{passive:true});
+    updateDots();
+    let busy=false;
+    const advance=()=>{
+      if(busy) return;
+      busy=true;
+      const sl=scrollEl.scrollLeft;
+      const w=scrollEl.clientWidth;
+      const maxScroll=scrollEl.scrollWidth-w;
+      if(maxScroll-sl<40){
+        scrollEl.scrollTo({left:0,behavior:'smooth'});
+      }else{
+        scrollEl.scrollBy({left:w*0.72,behavior:'smooth'});
+      }
+      setTimeout(()=>{busy=false;updateDots()},700);
+    };
+    let timer=setInterval(advance,15000);
+    const resetTimer=()=>{
+      clearInterval(timer);
+      timer=setInterval(advance,15000);
+      updateDots();
+    };
+    scrollEl.addEventListener('pointerdown',resetTimer);
+    scrollEl.addEventListener('wheel',resetTimer);
+    scrollEl.addEventListener('touchstart',resetTimer);
+    scrollEl.addEventListener('keydown',resetTimer);
+  }
+  if(carousel && scrollEl && dotsEl) initCarousel(carousel,scrollEl,dotsEl);
+})();
+</script>
+</body>
+</html>
+

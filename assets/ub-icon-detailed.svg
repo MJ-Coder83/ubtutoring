@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <style>
+      .bg { fill: #f5c542; }
+      .fg { fill: none; stroke: #0f1f3a; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .tx { font-family: 'Inter', 'Helvetica Neue', Arial, sans-serif; text-anchor: middle; fill: #0f1f3a; }
+    </style>
+  </defs>
+  <rect width="120" height="120" rx="24" class="bg"/>
+  <!-- Book pages behind letters -->
+  <g transform="translate(60, 42)">
+    <path d="M -18 -18 Q -9 -24 0 -18" class="fg" stroke-width="2.5"/>
+    <path d="M -18 -18 L -18 10" class="fg" stroke-width="2"/>
+    <path d="M -9 -22 Q 0 -28 9 -22" class="fg" stroke-width="2.5"/>
+    <path d="M 9 -18 L 9 10" class="fg" stroke-width="2"/>
+    <text x="0" y="4" class="tx" font-size="26" font-weight="700">UB</text>
+  </g>
+  <!-- Handshake -->
+  <g transform="translate(60, 62)">
+    <path d="M -16 4 Q -8 0 0 4 Q 8 0 16 4" class="fg" stroke-width="2.5"/>
+    <path d="M -12 -2 L -8 4 L 0 0 L 8 4 L 12 -2" class="fg" stroke-width="2.5" fill="none"/>
+  </g>
+  <!-- Wreath -->
+  <g transform="translate(60, 92)">
+    <path d="M -20 8 Q -20 0 -12 -4 Q -4 2 -4 8" class="fg" stroke-width="2" fill="none"/>
+    <path d="M 20 8 Q 20 0 12 -4 Q 4 2 4 8" class="fg" stroke-width="2" fill="none"/>
+    <text x="0" y="12" class="tx" font-size="7" font-weight="600" letter-spacing="0.5">EST. 2023</text>
+  </g>
+</svg>

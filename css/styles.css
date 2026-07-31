@@ -1,0 +1,210 @@
+/* UB Tutoring - Global Styles */
+:root {
+  --yellow: #FFD700;
+  --yellow-dark: #e6c200;
+  --navy: #0a1f3f;
+  --text: #222;
+  --light-bg: #f9f9f9;
+  --white: #fff;
+  --font-heading: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+  --font-body: 'Georgia', 'Times New Roman', serif;
+  --max-width: 1100px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* Header */
+.site-header {
+  background: var(--yellow);
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--navy);
+  text-decoration: none;
+}
+
+.logo .ub {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.logo .tutoring {
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.main-nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.main-nav a {
+  font-family: var(--font-heading);
+  color: var(--navy);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.btn-book {
+  background: #000;
+  color: var(--white) !important;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+}
+
+/* Hero */
+.hero {
+  background: var(--yellow);
+  text-align: center;
+  padding: 6rem 2rem;
+}
+
+.hero-logo-large {
+  font-family: var(--font-heading);
+  font-size: 8rem;
+  color: var(--navy);
+  line-height: 1;
+}
+
+.hero-logo-large span {
+  display: block;
+  font-size: 2rem;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: #333;
+  margin-top: 0.5rem;
+}
+
+.hero h1 {
+  font-family: var(--font-body);
+  font-size: 2.2rem;
+  margin-top: 2rem;
+  color: var(--text);
+}
+
+.hero p {
+  font-size: 1.25rem;
+  margin-top: 0.5rem;
+  color: #444;
+}
+
+/* Sections */
+.section {
+  padding: 4rem 2rem;
+}
+
+.section.alt {
+  background: var(--light-bg);
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color: var(--navy);
+}
+
+/* Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+  font-family: var(--font-heading);
+  margin-bottom: 0.5rem;
+}
+
+/* Forms */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+input, textarea, select {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+}
+
+button[type='submit'] {
+  background: var(--yellow);
+  color: var(--navy);
+  border: none;
+  padding: 0.75rem;
+  border-radius: 50px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Footer */
+footer {
+  background: var(--yellow);
+  padding: 2rem;
+  text-align: center;
+}
+
+.footer-links a {
+  margin: 0 0.5rem;
+  color: var(--navy);
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-logo-large {
+    font-size: 4rem;
+  }
+  .hero h1 {
+    font-size: 1.5rem;
+  }
+  .main-nav ul {
+    gap: 1rem;
+    font-size: 0.9rem;
+  }
+}
