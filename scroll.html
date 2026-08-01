@@ -12,11 +12,13 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{font-family:"Roboto",system-ui,sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
-.scroll-world{position:relative;height:300vh}
+.scroll-world{position:relative;height:400vh}
 .scroll-world video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:grayscale(18%) contrast(1.05)}
 .scroll-world .overlay{position:fixed;inset:0;background:linear-gradient(180deg,rgba(23,23,43,.35) 0%,rgba(23,23,43,.65) 100%);z-index:1;pointer-events:none}
-.scroll-world .content{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;pointer-events:none}
-.scroll-world h1{font-size:clamp(36px,5.4vw,56px);font-weight:700;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.35);max-width:900px;line-height:1.1}
+.scroll-world .slides{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;pointer-events:none}
+.scroll-world .slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;opacity:0;transform:translateY(18px);transition:opacity .4s ease,transform .4s ease;will-change:opacity,transform}
+.scroll-world .slide.active{opacity:1;transform:translateY(0)}
+.scroll-world h1{font-size:clamp(32px,5.4vw,56px);font-weight:700;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.35);max-width:900px;line-height:1.1}
 .scroll-world p{font-size:clamp(1rem,2.2vw,1.2rem);color:rgba(255,255,255,.92);max-width:54ch;margin-top:12px;text-shadow:0 1px 10px rgba(0,0,0,.3)}
 .scroll-world .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:3;color:rgba(255,255,255,.85);font-size:.9rem;font-weight:500;text-shadow:0 1px 8px rgba(0,0,0,.25);animation:bounce 2s ease-in-out infinite}
 @keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
@@ -31,9 +33,27 @@ body{font-family:"Roboto",system-ui,sans-serif;background:var(--bg);color:var(--
     <source src="assets/hero-bg.mp4" type="video/mp4">
   </video>
   <div class="overlay"></div>
-  <div class="content">
-    <h1>Actualise your child's potential.<br>With care.</h1>
-    <p>Curriculum-based exam prep that works.</p>
+  <div class="slides" id="slides">
+    <div class="slide" data-start="0" data-end="0.18">
+      <h1>Is your child struggling<br>to reach their potential?</h1>
+      <p>Actualise their potential. With care.</p>
+    </div>
+    <div class="slide" data-start="0.18" data-end="0.36">
+      <h1>10+ years<br>Head of Department</h1>
+      <p>Edexcel • AQA • OCR</p>
+    </div>
+    <div class="slide" data-start="0.36" data-end="0.54">
+      <h1>5-9s at GCSE</h1>
+      <p>C → A* at A-level</p>
+    </div>
+    <div class="slide" data-start="0.54" data-end="0.72">
+      <h1>Oxbridge • Russell Group</h1>
+      <p>Top university outcomes</p>
+    </div>
+    <div class="slide" data-start="0.72" data-end="0.9">
+      <h1>Curriculum-based exam prep<br>that works.</h1>
+      <p>Book Free Consultation</p>
+    </div>
   </div>
   <div class="scroll-hint">Scroll to explore</div>
 </section>
@@ -47,41 +67,45 @@ body{font-family:"Roboto",system-ui,sans-serif;background:var(--bg);color:var(--
 
 <script>
 const video = document.getElementById('hero-video');
-const scrollSection = document.querySelector('.scroll-world');
+const slides = document.querySelectorAll('.slide');
 
-if ('mediaSession' in navigator) {
-  navigator.mediaSession.metadata = new MediaMetadata({
-    title: 'UB Tutoring',
-    artist: 'Immersive Experience',
-  });
-}
-
-function updateVideoFrame() {
-  const rect = scrollSection.getBoundingClientRect();
-  const sectionHeight = scrollSection.offsetHeight;
+function updateOnScroll() {
+  const section = document.getElementById('scroll-world');
+  const rect = section.getBoundingClientRect();
+  const sectionHeight = section.offsetHeight;
   const viewportHeight = window.innerHeight;
-  
+
   if (rect.bottom < 0 || rect.top > viewportHeight) {
     video.pause();
     return;
   }
-  
+
   const scrolled = -rect.top;
   const maxScroll = sectionHeight - viewportHeight;
   const progress = Math.max(0, Math.min(1, scrolled / maxScroll));
-  
+
   if (video.duration) {
     video.currentTime = progress * video.duration;
   }
-  
+
   if (video.paused && rect.top <= viewportHeight && rect.bottom > 0) {
     video.play().catch(()=>{});
   }
+
+  slides.forEach(slide => {
+    const start = parseFloat(slide.dataset.start);
+    const end = parseFloat(slide.dataset.end);
+    if (progress >= start && progress < end) {
+      slide.classList.add('active');
+    } else {
+      slide.classList.remove('active');
+    }
+  });
 }
 
-window.addEventListener('scroll', updateVideoFrame, { passive: true });
-window.addEventListener('resize', updateVideoFrame);
-updateVideoFrame();
+window.addEventListener('scroll', updateOnScroll, { passive: true });
+window.addEventListener('resize', updateOnScroll);
+updateOnScroll();
 </script>
 
 </body>
