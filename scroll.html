@@ -79,6 +79,9 @@ let videoBlobUrl = null;
 let ticking = false;
 let seeking = false;
 let primed = false;
+let targetProgress = 0;
+let currentProgress = 0;
+const LERP = 0.12;
 
 async function loadVideoAsBlob() {
   try {
