@@ -37,7 +37,6 @@ body{font-family:"Roboto",system-ui,sans-serif;background:var(--bg);color:var(--
 
 <section class="scroll-world" id="scroll-world">
   <video id="hero-video" muted playsinline style="background:#0e1b24">
-    <source src="assets/hero-bg.mp4" type="video/mp4" media="(min-width:768px)">
     <source src="assets/hero-bg-portrait.mp4" type="video/mp4">
   </video>
   <div class="overlay"></div>
@@ -83,7 +82,7 @@ let primed = false;
 
 async function loadVideoAsBlob() {
   try {
-    const response = await fetch('assets/hero-bg.mp4');
+    const response = await fetch('assets/hero-bg-portrait.mp4');
     const blob = await response.blob();
     videoBlobUrl = URL.createObjectURL(blob);
     video.src = videoBlobUrl;
