@@ -68,15 +68,41 @@ body{font-family:"Roboto",system-ui,sans-serif;background:var(--bg);color:var(--
 <script>
 const video = document.getElementById('hero-video');
 const slides = document.querySelectorAll('.slide');
+let videoBlobUrl = null;
+let ticking = false;
+let seeking = false;
+
+async function loadVideoAsBlob() {
+  try {
+    const response = await fetch('assets/hero-bg.mp4');
+    const blob = await response.blob();
+    videoBlobUrl = URL.createObjectURL(blob);
+    video.src = videoBlobUrl;
+    video.load();
+  } catch (e) {
+    console.warn('Blob load failed, using direct src', e);
+  }
+}
+
+loadVideoAsBlob();
 
 function updateOnScroll() {
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      updateVideoFrame();
+      ticking = false;
+    });
+    ticking = true;
+  }
+}
+
+function updateVideoFrame() {
   const section = document.getElementById('scroll-world');
   const rect = section.getBoundingClientRect();
   const sectionHeight = section.offsetHeight;
   const viewportHeight = window.innerHeight;
 
   if (rect.bottom < 0 || rect.top > viewportHeight) {
-    video.pause();
     return;
   }
 
@@ -84,12 +110,12 @@ function updateOnScroll() {
   const maxScroll = sectionHeight - viewportHeight;
   const progress = Math.max(0, Math.min(1, scrolled / maxScroll));
 
-  if (video.duration) {
-    video.currentTime = progress * video.duration;
-  }
-
-  if (video.paused && rect.top <= viewportHeight && rect.bottom > 0) {
-    // Do not autoplay; only allow scrub-driven playback
+  if (video.duration && isFinite(video.duration)) {
+    const targetTime = progress * video.duration;
+    if (Math.abs(video.currentTime - targetTime) > 0.05) {
+      seeking = true;
+      video.currentTime = targetTime;
+    }
   }
 
   slides.forEach(slide => {
@@ -102,6 +128,10 @@ function updateOnScroll() {
     }
   });
 }
+
+video.addEventListener('seeked', () => {
+  seeking = false;
+});
 
 window.addEventListener('scroll', updateOnScroll, { passive: true });
 window.addEventListener('resize', updateOnScroll);
