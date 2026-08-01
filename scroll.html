@@ -89,7 +89,7 @@ function updateOnScroll() {
   }
 
   if (video.paused && rect.top <= viewportHeight && rect.bottom > 0) {
-    video.play().catch(()=>{});
+    // Do not autoplay; only allow scrub-driven playback
   }
 
   slides.forEach(slide => {
