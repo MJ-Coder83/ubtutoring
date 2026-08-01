@@ -116,33 +116,30 @@ function updateOnScroll() {
   if (rect.top <= viewportHeight && rect.bottom > 0) {
     video.classList.add('visible');
   }
-  if (!ticking) {
-    window.requestAnimationFrame(() => {
-      updateVideoFrame();
-      ticking = false;
-    });
-    ticking = true;
-  }
+
+  const sectionHeight = section.offsetHeight;
+  const scrolled = -rect.top;
+  const maxScroll = sectionHeight - viewportHeight;
+  targetProgress = Math.max(0, Math.min(1, scrolled / Math.max(1, maxScroll)));
 }
 
 function updateVideoFrame() {
   const section = document.getElementById('scroll-world');
   const rect = section.getBoundingClientRect();
-  const sectionHeight = section.offsetHeight;
   const viewportHeight = window.innerHeight;
 
   if (rect.bottom < 0 || rect.top > viewportHeight) {
     return;
   }
 
-  const scrolled = -rect.top;
-  const maxScroll = sectionHeight - viewportHeight;
-  const progress = Math.max(0, Math.min(1, scrolled / maxScroll));
+  currentProgress += (targetProgress - currentProgress) * LERP;
+  if (Math.abs(targetProgress - currentProgress) < 0.0005) {
+    currentProgress = targetProgress;
+  }
 
   if (video.duration && isFinite(video.duration)) {
-    const targetTime = progress * video.duration;
-    if (Math.abs(video.currentTime - targetTime) > 0.05) {
-      seeking = true;
+    const targetTime = currentProgress * video.duration;
+    if (Math.abs(video.currentTime - targetTime) > 0.02) {
       video.currentTime = targetTime;
     }
   }
@@ -150,7 +147,7 @@ function updateVideoFrame() {
   slides.forEach(slide => {
     const start = parseFloat(slide.dataset.start);
     const end = parseFloat(slide.dataset.end);
-    if (progress >= start && progress < end) {
+    if (currentProgress >= start && currentProgress < end) {
       slide.classList.add('active');
     } else {
       slide.classList.remove('active');
@@ -158,13 +155,15 @@ function updateVideoFrame() {
   });
 }
 
-video.addEventListener('seeked', () => {
-  seeking = false;
-});
+function loop() {
+  updateVideoFrame();
+  requestAnimationFrame(loop);
+}
 
 window.addEventListener('scroll', updateOnScroll, { passive: true });
 window.addEventListener('resize', updateOnScroll);
 updateOnScroll();
+loop();
 </script>
 
 </body>
