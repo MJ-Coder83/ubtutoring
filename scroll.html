@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UB Tutoring — Immersive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f5ef;--ink:#17172b;--accent:#F4B942}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Roboto",system-ui,sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden}
+.scroll-world{position:relative;height:300vh}
+.scroll-world video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:grayscale(18%) contrast(1.05)}
+.scroll-world .overlay{position:fixed;inset:0;background:linear-gradient(180deg,rgba(23,23,43,.35) 0%,rgba(23,23,43,.65) 100%);z-index:1;pointer-events:none}
+.scroll-world .content{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;pointer-events:none}
+.scroll-world h1{font-size:clamp(36px,5.4vw,56px);font-weight:700;color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.35);max-width:900px;line-height:1.1}
+.scroll-world p{font-size:clamp(1rem,2.2vw,1.2rem);color:rgba(255,255,255,.92);max-width:54ch;margin-top:12px;text-shadow:0 1px 10px rgba(0,0,0,.3)}
+.scroll-world .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:3;color:rgba(255,255,255,.85);font-size:.9rem;font-weight:500;text-shadow:0 1px 8px rgba(0,0,0,.25);animation:bounce 2s ease-in-out infinite}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+.section{padding:80px 24px;position:relative;z-index:3;background:var(--bg)}
+.container{max-width:1200px;margin:0 auto}
+</style>
+</head>
+<body>
+
+<section class="scroll-world" id="scroll-world">
+  <video id="hero-video" autoplay muted playsinline poster="assets/ub-logo-header.jpg">
+    <source src="assets/hero-bg.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
+  <div class="content">
+    <h1>Actualise your child's potential.<br>With care.</h1>
+    <p>Curriculum-based exam prep that works.</p>
+  </div>
+  <div class="scroll-hint">Scroll to explore</div>
+</section>
+
+<section class="section" id="about">
+  <div class="container">
+    <h2>About Me</h2>
+    <p>Experienced teacher, tutor and Head of Department with over 10 years of classroom, tutoring and examination experience.</p>
+  </div>
+</section>
+
+<script>
+const video = document.getElementById('hero-video');
+const scrollSection = document.querySelector('.scroll-world');
+
+if ('mediaSession' in navigator) {
+  navigator.mediaSession.metadata = new MediaMetadata({
+    title: 'UB Tutoring',
+    artist: 'Immersive Experience',
+  });
+}
+
+function updateVideoFrame() {
+  const rect = scrollSection.getBoundingClientRect();
+  const sectionHeight = scrollSection.offsetHeight;
+  const viewportHeight = window.innerHeight;
+  
+  if (rect.bottom < 0 || rect.top > viewportHeight) {
+    video.pause();
+    return;
+  }
+  
+  const scrolled = -rect.top;
+  const maxScroll = sectionHeight - viewportHeight;
+  const progress = Math.max(0, Math.min(1, scrolled / maxScroll));
+  
+  if (video.duration) {
+    video.currentTime = progress * video.duration;
+  }
+  
+  if (video.paused && rect.top <= viewportHeight && rect.bottom > 0) {
+    video.play().catch(()=>{});
+  }
+}
+
+window.addEventListener('scroll', updateVideoFrame, { passive: true });
+window.addEventListener('resize', updateVideoFrame);
+updateVideoFrame();
+</script>
+
+</body>
+</html>
